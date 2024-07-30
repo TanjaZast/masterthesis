@@ -1,0 +1,49 @@
+\chapter{Related Work}
+\label{cha:relatedwork}
+
+This chapter presents important work in the areas of machine learning, 6MWT and the use of ML with wearable devices. A lot of research is being done in these areas and there are many exciting developments and discoveries. ML is a rapidly growing field and 6MWT has also been studied a lot for its medical and fitness applications. The combination of machine learning with wearable devices, especially the Apple Watch Ultra, particularly for the 6MWT, is a new and promising area of research.
+
+We will focus on how ML can be applied to the 6MWT using the Apple Watch Ultra.  A more detailed related work part is already shown in chapter ~\ref{cha:background}.
+
+This chapter presents a selection of papers that have contributed to these topics. By looking at the methods used in previous research, we will provide a basis for understanding the current state of knowledge. We will also explain how our work differs and what new contributions we aim to make.
+
+\section{Classification and Regression Tasks for Apple Watch Data}
+
+In ML, classification and regression are fundamental tasks within supervised learning. Supervised learning involves training a model on labeled data, where the model learns from input-output pairs. Classification predicts discrete, categorical labels, such as determining if an individual is a subject or a patient, while regression predicts continuous values, such as estimating the age based on heart rate data. These methods can be interrelated, where regression models are used for classification by converting categories into numerical values and applying thresholds to determine the classes ~\cite{bishop2006pattern}.
+
+Previous studies have utilized various ML models to predict health outcomes from wearable sensor data. These models include Support Vector Machines (SVM), random forests, and neural networks. For example, ~\textcite{Bailey} used SVMs to classify cardiovascular risk based on heart rate variability data. An SVM is a supervised learning model that classifies data by finding the optimal hyperplane that separates different classes in a high-dimensional space.
+
+The study by ~\textcite{Bailey} aims to develop and evaluate the accuracy of a method using the inertial measurement unit of a consumer-grade smartwatch to predict gait outcomes using regression-based ML techniques. An inertial measurement unit measures and reports a body's specific force, angular rate, and sometimes the surrounding magnetic field, using a combination of accelerometers, gyroscopes, and magnetometers. Regression models are particularly effective for predicting continuous values such as stride time, stride length, stride width, and walking speed.
+
+The work of ~\textcite{Bailey} additionally uses extreme gradient boosting, another regression techniques. Extreme gradient boosting is a ML algorithm that handles complex, non-linear relationships well and is robust against overfitting, which occurs when a model learns the training data too well, including its noise and outliers, leading to poor generalization to new data ~\cite{Stojancic}. Similarly, the kernel SVM captures non-linear relationships in data effectively, making it useful for predicting complex patterns.
+
+Compared to ~\textcite{Bailey} work, our study extends the research to different populations, from younger adults to older adults, to further refine the models. Additionally, the study explores the real-world application of the smartwatch-based model in the context of the 6MWT. This investigation assesses the model's effectiveness under varying environmental conditions, providing a broader understanding of its applicability and reliability in diverse scenarios.
+
+\section{Pain Level Prediction with ML}
+
+The work of ~\textcite{Stojancic} explores the potential of using the Apple Watch to predict pain levels in individuals with sickle cell disease during vaso-occlusive crises in a day hospital setting. This study develops and evaluates specific ML algorithms for this purpose, including multinomial logistic regression, gradient boosting, and random forest.
+
+Multinomial logistic regression is chosen for its simplicity and effectiveness in handling multi-class classification problems. It extends logistic regression to scenarios where the dependent variable has more than two categories, making it suitable for predicting various pain levels.
+
+Gradient boosting is an ensemble learning technique that builds models sequentially, with each new model correcting errors made by the previous ones. It is particularly powerful for handling complex, non-linear relationships in data.
+
+Random forest, another ensemble learning method, is used primarily for its robustness and ability to manage high-dimensional data effectively. It constructs multiple decision trees during training and merges them to improve predictive performance and control overfitting.
+
+The evaluation metrics employed in the study of ~\textcite{Stojancic} include accuracy, f1-score and root-mean-square error. Accuracy measures the proportion of correct predictions, the f1-score balances precision and recall, providing a single metric that considers both false positives and false negatives, and RMSE assesses the model's prediction error by calculating the square root of the average squared differences between predicted and actual values.
+
+In our work, the focus is on increasing the sample size while minimizing the data measuring process due to the 6MWT interval for each subject. This approach aims to investigate whether it is possible to avoid class imbalance (where some classes have significantly more samples than others) while simultaneously improving model accuracy. Addressing class imbalance is crucial because it can lead to biased models that perform poorly on underrepresented classes. By expanding the dataset and optimizing the data collection process, this thesis seeks to enhance the reliability and precision of the predictive models while using similar metrics to the work of ~\textcite{Stojancic}.
+
+\section{Deep Learning for Sleep Stage Classification}
+
+The wok of \textcite{9754876} aims to develop a practical deep learning model for classifying sleep stages into four categories: wake, Rapid Eye Movement (REM), N1/N2 (light sleep stages), and N3 (deep sleep stage), using heart rate and acceleration data from consumer wearable devices.
+
+The research of ~\textcite{9754876} uses a Gated Recurrent Unit (GRU)-based deep neural network model. GRUs are a type of recurrent neural network architecture specifically designed to capture temporal dependencies in sequential data. This characteristic is crucial for classification tasks where the temporal order of data points significantly impacts the outcome.
+
+The model architecture comprises three bidirectional GRU layers. Bidirectional GRUs process the input data in both forward and backward directions, which allows the model to consider the entire sequence of data from both past and future contexts. This bidirectional approach enhances the model's ability to learn temporal dependencies more effectively, thereby improving classification accuracy.
+
+To ensure a robust evaluation of the model's performance, our work employs a leave-one-subject-out validation and cross validation strategy. In the leave-one-subject-out validation method, the data from each subject is used exactly once for testing, while the data from all other subjects is used for training. This approach helps mitigate the risk of overfitting. By validating the model in this manner, we can ensure that the performance metrics reflect the model's ability to generalize across different subjects.
+
+\newpage
+This chapter has summarized some key papers and their main findings, describing the methods used and the contributions to the field of wearable device sensor data analysis. 
+
+Our aim in this work is to demonstrate the significance and novelty of our approach, which combines the 6MWT with the advanced features of the Apple Watch Ultra and powerful machine learning techniques.

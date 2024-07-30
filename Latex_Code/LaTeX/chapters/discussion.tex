@@ -1,0 +1,99 @@
+ \chapter{Discussion and Further Work}
+\label{cha:discussion}
+
+\section{Discussion}
+
+In our analysis, ridge regression consistently outperformed linear regression across most prediction tasks. The ridge regression models showed nearly perfect R\textsuperscript{2} values, particularly for predicting weight and BMI, indicating high accuracy and reliability in these areas. However, the models struggled with age prediction, resulting in poor performance. This suggests that the features we used were insufficient to capture the variability associated with age. Predicting age with the given data proved to be challenging, as few features, such as weight or height, clearly distinguished the age range of the study. Heart rate differences were only noticeable at extreme ends of the age spectrum. For instance, the RMSE for age prediction with CatBoost regression was 12.37, which is acceptable given the difficulty in distinguishing small age differences (e.g., between 22 and 23 years old) based on pulse alone.
+
+For binary classification tasks, all models achieved moderate success. Despite this, the high RMSE values, for example especially for heart rate prediction with linear regression or age prediction in general could indicated potential overfitting. This overfitting problem underscores the importance of having larger and diverse datasets to improve the generalization and robustness of our models.
+
+In general our classification efforts were more successful overall. The RF classifier, in particular, showed promising results in predicting subject versus patient status and sex. It achieved high accuracy, precision, recall, and f1-scores, indicating strong performance in these tasks. The classifier's effectiveness in distinguishing between different categories within our dataset was especially evident in sex prediction.
+
+In the realm of clustering, the results were less promising. The clustering models yielded suboptimal outcomes, evidenced by low silhouette scores and high Davies-Bouldin scores. These metrics suggest that the clusters formed were not well-defined and had significant overlap, pointing to the need for further refinement or different approaches in clustering.
+
+Risk predictions also performed well, with many models achieving good results. The NN, especially with an expanded dataset, showed significant improvement compared to previous attempts. Although it is clear that relying exclusively on Apple Watch Ultra data often resulted in decreased performance, these models still performed better than random guesses and demonstrated considerable potential.
+
+\section{Further Work}
+
+Future research could benefit from including additional physiological and demographic variables, such as medical history, genetic information, and lifestyle factors. This expansion might enhance the predictive power and overall performance of the models, particularly for age prediction. Predicting age is inherently challenging with the given data, as few features like weight or height distinctly mark the age range of the study. Heart rate differences, for instance, only become apparent at the extremes of the age spectrum, making small age differences hard to predict.
+
+To improve model generalizability, future studies should focus on collecting larger and more diverse datasets, such as sick young subjects and healthy older subjects. Employing advanced preprocessing techniques, such as imputation, normalization, and feature engineering, might be essential to ensure data quality and robustness. Additionally, techniques such as regularization, CV, or obtaining a larger and more diverse dataset should be considered to improve the model's generalization ability. The NN results indicated excellent performance on the training set but overfitting on the validation set, evident from the low and unstable validation accuracy and the high, fluctuating validation loss.
+
+Researchers might as well explore advanced optimization techniques, including hyperparameter tuning, CV, and ensemble learning, to refine the models. Exploring more sophisticated NN architectures or ensemble methods could help achieve better performance in predicting the risk factor. 
+
+Another further attempt could be integrating data from wearable health devices for real-time, continuous monitoring. Moving beyond the 6MWT to allow for longer wear times of the Apple Watch Ultra could provide more comprehensive data and better calibration on subjects. This would enable more accurate predictions and a better understanding of long-term health trends. Longer wear times, though not part of the 6MWT, might lead to better calibration tailored to the individual subjects.
+
+\section{Additional Analyses and Future Directions}
+
+In the section before, we suggested that future work could include additional physiological and demographic variables. Another further attempt could also be, to gather more data to verify whether the findings and theories we presented were accurate. To begin this process, we received a new dataset with twelve additional subjects: ten were patients, and two were healthy subjects.
+
+First, we faced several challenges with the new data. Unlike our previous datasets, this one lacked detailed documentation. Key metrics, such as blood pressure, were missing. Additionally, the data recorded by the study nurse differed in format from our earlier data, leading to inconsistencies and typographical errors. Despite these issues, we managed to accurately label the data by carefully filtering and cross-referencing the timestamps from the provided tables.
+
+We then merged this new dataset with our existing one, increasing our total number of subjects from 45 to 57. This larger dataset allowed us to conduct further analyses. We used the random forest algorithm to predict two outcomes: the sex of the subjects and whether they were patients or healthy subjects.
+
+Initially, our results were poor. We suspected that the imbalance in the dataset—with fewer women and more patients than healthy subjects—was causing this issue. To improve our model's performance, we used GridSearchCV to optimize the random forest model's hyperparameters. These adjustments significantly improved our results.
+
+In the end, our model successfully predicted the sex of the subjects and classified them as either patients or healthy subjects. We evaluated again these analyses using standard metrics such as accuracy, precision, recall, and f1-score. Including these detailed results will illustrate the model's performance.
+
+These additional analyses show the benefits of expanding the dataset and including more subjects. Below is a table summarizing the performance metrics for sex prediction and subject/patient prediction using different sets of features.
+
+\FloatBarrier
+\begin{table}[ht]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{llrrrr}
+        \toprule
+        \textbf{prediction task} & \textbf{Features} & \textbf{precision} & \textbf{recall} & \textbf{f1-score} & \textbf{support} \\
+        \midrule
+        \multirow{6}{*}{\makecell[l]{sex\\prediction}} 
+        & \makecell[l]{heart rate, height, weight, distance, age, BMI, active\\and basal energy burned} & & & & \\
+        & female & 0.60 & 0.75 & 0.67 & 4.00 \\
+        & male & \textbf{0.86} & 0.75 & 0.80 & 8.00 \\
+        & accuracy &  &  &  & \textbf{0.75} \\
+        & macro avg & 0.73 & 0.75 & 0.73 & 12.00 \\
+        & weighted avg & 0.77 & 0.75 & 0.76 & 12.00 \\
+        \midrule
+        \multirow{6}{*}{\makecell[l]{sex\\prediction}} 
+        & \makecell[l]{heart rate, real distance, active and basal energy burned} & & & & \\
+        & female & 0.50 & 0.50 & 0.50 & 4.00 \\
+        & male & \textbf{0.75} & \textbf{0.75} & \textbf{0.75} & 8.00 \\
+        & accuracy &  &  &  & \textbf{0.67} \\
+        & macro avg & 0.63 & 0.63 & 0.63 & 12.00 \\
+        & weighted avg & 0.67 & 0.67 & 0.67 & 12.00 \\
+        \midrule
+        \multirow{6}{*}{\makecell[l]{subject/patient\\prediction}} 
+        & \makecell[l]{heart rate, height, weight, distance, age, BMI, active\\and basal energy burned, sex} & & & & \\
+        & patient & 0.86 & \textbf{1.00} & 0.92 & 6.00 \\
+        & subject & \textbf{1.00} & 0.83 & 0.91 & 6.00 \\
+        & accuracy &  &  &  & \textbf{0.92} \\
+        & macro avg & 0.93 & 0.92 & 0.92 & 12.00 \\
+        & weighted avg & 0.93 & 0.92 & 0.92 & 12.00 \\
+        \midrule
+        \multirow{6}{*}{\makecell[l]{subject/patient\\prediction}} 
+        & \makecell[l]{heart rate, real distance, active and basal energy burned} & & & & \\
+        & patient & 0.86 & \textbf{1.00} & 0.92 & 6.00 \\
+        & subject & \textbf{1.00} & 0.83 & 0.91 & 6.00 \\
+        & accuracy &  &  &  & \textbf{0.92} \\
+        & macro avg & 0.93 & 0.92 & 0.92 & 12.00 \\
+        & weighted avg & 0.93 & 0.92 & 0.92 & 12.00 \\
+        \bottomrule
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Results summary for sex and subject or patient prediction using different sets of features}
+    \label{table:allDiscussion}
+\end{table}
+\FloatBarrier
+
+The additional analysis with the expanded dataset revealed important insights. After optimizing the random forest model using GridSearchCV, we observed significant performance improvements. For sex prediction using a comprehensive feature set (heart rate, height, weight, distance, age, BMI, active and basal energy burned), the model achieved an accuracy of 75\%. This indicates a reasonably good performance, although predicting female subjects remains challenging, as shown by the lower precision and recall values.
+
+When using a reduced feature set (heart rate, real distance, active and basal energy burned), the accuracy dropped to 67\%, highlighting the critical role of demographic features in improving prediction accuracy.
+
+For the 'subject/patient' prediction, the model performed exceptionally well, achieving an accuracy of 92\% with both feature sets. This high accuracy demonstrates the model's robustness in distinguishing between patients and healthy subjects, which is crucial for health monitoring and prediction applications.
+
+These findings emphasize the importance of a balanced and comprehensive dataset for reliable ML model performance. Future research should still focus on gathering more balanced data and exploring additional features to further enhance accuracy and reliability.
+
+\section{Conclusion}
+
+In this study, we demonstrated the potential of ML models for predicting various health metrics. The results highlight the promise of these models in health monitoring and prediction, though there is significant room for improvement. Our research also found out, that while Apple Watch Ultra data offers substantial potential, it cannot be relied upon exclusively. To achieve meaningful results, it is essential to incorporate additional data not measured by the Apple Watch Ultra.
+
+Overall, while our models showed potential and sometimes impressive results, especially with RF classifiers, the challenges in predicting certain metrics highlight the need for more comprehensive datasets and advanced methods. The Apple Watch Ultra data, despite its limitations, provided valuable insights and demonstrated that wearable technology holds promise for health monitoring and prediction.
